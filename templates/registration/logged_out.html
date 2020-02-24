@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>form: {{ form }}</p>
+<p>next: {{ next }}</p>
+<p>site: {{ site }}</p>
+<p>site_name: {{ site_name }}</p>
+<p>view: {{ view }}</p>
+<p>csrf_token: {{ csrf_token }}</p>
+<p>messages: {{ messages }}</p>
+<p>perms: {{ perms }}</p>
+<p>request: {{ request }}</p>
+<p>user: {{ user }}</p>
+<pre style="width: 100%;"> {% filter force_escape %} {% debug %} {% endfilter %}</pre>
+</body>
+</html>
