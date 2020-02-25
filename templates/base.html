@@ -6,9 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link id="color-theme" rel="stylesheet" href="{% static 'css/w3-theme/w3-theme-blue.css' %}">
     <title>{% block title %}Chemlab{% endblock title %}</title>
   </head>
-  <body>
+  <body class="w3-theme-light">
     {% include "navbar.html" %}
     {% block body %}
     {% endblock body %}
