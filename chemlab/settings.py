@@ -25,7 +25,7 @@ SECRET_KEY = 'e3ddzu8a6+lrqw@2p*5$6q#n&!tm*v8r%ah8mb8*il+k6rio@7'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'emreture-cs50w-chemlab.herokuapp.com']
 
 
 # Application definition
