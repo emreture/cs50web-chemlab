@@ -123,7 +123,11 @@ STATICFILES_DIRS = [
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+LOGIN_REDIRECT_URL = '/'
+
 # Configure Django App for Heroku.
-if not DEBUG:
-    import django_heroku
+import django_heroku
+if DEBUG:
+    django_heroku.settings(locals(), db_colors=False, databases=False, test_runner=False, staticfiles=False, allowed_hosts=False, logging=False, secret_key=False)
+else:
     django_heroku.settings(locals())
