@@ -1,17 +1,37 @@
 {% extends "base.html" %}
 {% block title %}
-Login page
+Login
 {% endblock title %}
 {% block body %}
-<p>form: {{ form }}</p>
-<p>next: {{ next }}</p>
-<p>site: {{ site }}</p>
-<p>site_name: {{ site_name }}</p>
-<p>view: {{ view }}</p>
-<p>csrf_token: {{ csrf_token }}</p>
-<p>messages: {{ messages }}</p>
-<p>perms: {{ perms }}</p>
-<p>request: {{ request }}</p>
-<p>user: {{ user }}</p>
-<pre style="width: 100%;"> {% filter force_escape %} {% debug %} {% endfilter %}</pre>
+<div class="container bg-white border rounded py-3 my-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-4 w3-theme-dark rounded-top py-1">
+      <h4>Chemlab User Login</h4>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-lg-4 w3-theme-light border rounded bottom py-1">
+      <form class="" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}">
+        <div class="form-group">
+          {{ form.username.label_tag }}
+          <input class="form-control" type="text" name="username" id="id_username" value="{{ form.username.value|default_if_none:"" }}" autofocus />
+          <small class="text-danger">{{ form.username.errors }}</small>
+        </div>
+        <div class="form-group">
+          {{ form.password.label_tag }}
+          <input class="form-control" type="password" name="password" id="id_password" />
+          <small class="text-danger">{{ form.password.errors }}</small>
+        </div>
+        <div class="form-group">
+          <small class="text-danger">{{ form.non_field_errors }}</small>
+        </div>
+        <div class="form-group text-center">
+          <button class="btn btn-primary btn-block" type="submit">Login</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 {% endblock body %}
