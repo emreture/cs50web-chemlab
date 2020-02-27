@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}
+Chemlab Home
+{% endblock title %}
+{% block body %}
+<div class="container bg-white border rounded py-3 my-1">
+  <div class="row">
+    <div class="col-auto">
+      <h2 class="w3-text-theme">Welcome to chemlab website!</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-auto">
+      <p>This is my final project for CS50's Web Programming with Python and JavaScript course.</p>
+      <p>In this project, I've built a web application for handling sample records and analysis results of a chemistry laboratory that performs gasoline and gas oil analysis.
+        Laboratory staff can add/edit samples, enter analysis results of samples, and add/edit customers of the laboratory.
+        Laboratory manager can also add/edit analysis methods and products to be analysed. Customers of the laboratory can see analysis
+        results of their samples.
+      </p>
+      <p>On the samples page laboratory staff can add new samples, edit existing samples or delete existing samples. Laboratory staff can also enter the
+        analysis results of the samples on the analysis results page. Customers of the laboratory can be added, edited and deleted on the customers page.
+      </p>
+      <p>Customers can see analysis results of their results on the analysis results page when they are logged in.</p>
+      <p>On the site administration page laboratory manager can edit analysis methods and products to be analysed using Django's built-in admin application.</p>
+      <p>Customers can only see links to homepage and analysis results page on the navigation bar. In addition to these, links to samples and customers pages
+        are visible to laboratory staff. Laboratory manager can see all of the links on the navigation bar.
+      </p>
+      <p>Sample, result, customer, product and analysis method data are stored in a PostgreSQL database hosted by Heroku.</p>
+      <p>This web application is mobile-responsive.</p>
+      <p class="mark font-italic h5 px-3">I'd like to thank all the people who made <a href="https://www.edx.org/course/cs50s-web-programming-with-python-and-javascript">this great course</a> possible and also thank you to <a href="https://www.edx.org/bio/brian-yu">Brian Yu</a> for his fluency and easy-to-understand lectures.
+      </p>
+      <p class="my-3">2020 - <a href="https://github.com/emreture">emreture</a></p>
+    </div>
+  </div>
+</div>
+{% endblock body %}
