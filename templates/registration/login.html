@@ -4,6 +4,13 @@ Login
 {% endblock title %}
 {% block body %}
 <div class="container bg-white border rounded py-3 my-5">
+  {% if next %}
+  <div class="row justify-content-center">
+    <div class="col-lg-4 alert alert-danger">
+      You are not authorized to view the page.<br>Please log in as an authorized user.
+    </div>
+  </div>
+  {% endif %}
   <div class="row justify-content-center">
     <div class="col-lg-4 w3-theme-dark rounded-top py-1">
       <h4>Chemlab User Login</h4>
