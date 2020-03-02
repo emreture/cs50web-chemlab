@@ -12,8 +12,10 @@
   </head>
   <body class="w3-theme-light">
     {% include "navbar.html" %}
+    {% include "messages.html" %}
     {% block body %}
     {% endblock body %}
+    <textarea class="w3-theme-l4 small" rows="10" style="width: 100%; display: none;">{% filter force_escape %} {% debug %} {% endfilter %}</textarea>
     <footer class="footer w3-theme-dark">
       <div class="container-fluid">
         <span class="text-white-50 small">Final project - Chemlab - 2020 - emreture</span>
