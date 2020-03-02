@@ -132,3 +132,13 @@ if DEBUG:
     django_heroku.settings(locals(), db_colors=False, databases=False, test_runner=False, staticfiles=False, allowed_hosts=False, logging=False, secret_key=False)
 else:
     django_heroku.settings(locals())
+
+# Configure messages for bootstrap 4.
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
+    messages.DEBUG: 'alert-info',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
+}
