@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}
+Customer details
+{% endblock title %}
+{% block body %}
+<div class="container bg-white border rounded py-3 my-1">
+  <div class="row">
+    <div class="col-auto">
+      <h2 class="w3-text-theme">Edit customer details</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <form class="" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+          {{ form.name.label_tag }}
+          <input class="form-control" type="text" name="name" id="id_name" value="{{ form.name.value|default_if_none:"" }}" maxlength="{{ form.name.field.max_length }}" autofocus />
+          <small class="text-danger">{{ form.name.errors }}</small>
+        </div>
+        <div class="form-group">
+          {{ form.address.label_tag }}
+          <textarea class="form-control" name="address" id="id_address" rows="3">{{ form.address.value|default_if_none:"" }}</textarea>
+          <small class="text-danger">{{ form.address.errors }}</small>
+        </div>
+        <div class="form-group">
+          <small class="text-danger">{{ form.non_field_errors }}</small>
+        </div>
+        <div class="form-group text-center">
+          <a class="btn btn-light border rounded mx-2" href="{% url 'customers:index' %}">Cancel</a>
+          <button class="btn btn-primary mx-2" type="submit">Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock body %}
