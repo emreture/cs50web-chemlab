@@ -26,8 +26,8 @@ def index(request):
             escaped_customer_name = escape(customer.name)
             msg = f"<b>{escaped_customer_name}</b> was saved successfully."
             messages.add_message(request, messages.SUCCESS, msg)
-            # query = None
-            # goto_last_page = True
+            query = None
+            goto_last_page = True
             form = CustomerForm()
         except ValueError:
             escaped_customer_name = escape(customer.name)
@@ -35,9 +35,9 @@ def index(request):
             messages.add_message(request, messages.ERROR, msg)
 
     if query:
-        customers = Customer.objects.filter(name__icontains=query)
+        customers = Customer.objects.filter(name__icontains=query).order_by('id')
     else:
-        customers = Customer.objects.all()
+        customers = Customer.objects.all().order_by('id')
     paginator = Paginator(customers, 5)
     if goto_last_page:
         page_number = paginator.num_pages
