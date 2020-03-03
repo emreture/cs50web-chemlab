@@ -26,7 +26,7 @@ SECRET_KEY = 'e3ddzu8a6+lrqw@2p*5$6q#n&!tm*v8r%ah8mb8*il+k6rio@7'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = strtobool(os.environ.get('DEBUG', 'True'))
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'emreture-cs50w-chemlab.herokuapp.com']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -129,10 +129,11 @@ LOGIN_REDIRECT_URL = '/'
 
 # Configure Django App for Heroku.
 import django_heroku
-if DEBUG:
-    django_heroku.settings(locals(), db_colors=False, databases=False, test_runner=False, staticfiles=True, allowed_hosts=False, logging=False, secret_key=False)
-else:
-    django_heroku.settings(locals())
+django_heroku.settings(locals())
+# if DEBUG:
+#     django_heroku.settings(locals(), db_colors=False, databases=False, test_runner=False, staticfiles=True, allowed_hosts=False, logging=False, secret_key=False)
+# else:
+#     django_heroku.settings(locals())
 
 # Configure messages for bootstrap 4.
 from django.contrib.messages import constants as messages
@@ -143,3 +144,7 @@ MESSAGE_TAGS = {
     messages.WARNING: 'alert-warning',
     messages.ERROR: 'alert-danger',
 }
+
+print('DEBUG:', DEBUG)
+print('DATABASES:', DATABASES)
+print('ALLOWED_HOSTS:', ALLOWED_HOSTS)
