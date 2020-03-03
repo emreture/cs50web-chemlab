@@ -129,7 +129,7 @@ LOGIN_REDIRECT_URL = '/'
 
 # Configure Django App for Heroku.
 import django_heroku
-django_heroku.settings(locals(), databases=False)
+# django_heroku.settings(locals(), databases=False)
 # if DEBUG:
 #     django_heroku.settings(locals(), db_colors=False, databases=False, test_runner=False, staticfiles=True, allowed_hosts=False, logging=False, secret_key=False)
 # else:
