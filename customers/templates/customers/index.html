@@ -20,11 +20,11 @@ Customers
       {% if page_obj %}
         {% if query %}
         <span class="text-secondary small">
-          {{ customers_count }} records found for '{{ query }}'. <a href="{% url 'customers:index' %}">Clear search filter.</a>
+          {{ page_obj.paginator.count }} records found for '{{ query }}'. <a href="{% url 'customers:index' %}">Clear search filter.</a>
         </span>
         {% else %}
         <span class="text-secondary small">
-          {{ customers_count }} records found.
+          {{ page_obj.paginator.count }} records found.
         </span>
         {% endif %}
       {% else %}

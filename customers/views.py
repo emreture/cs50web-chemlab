@@ -46,7 +46,6 @@ def index(request):
         'form': form,
         'page_obj': page_obj,
         'query': query,
-        'customers_count': len(customers),
     }
     return render(request, "customers/index.html", context)
 
