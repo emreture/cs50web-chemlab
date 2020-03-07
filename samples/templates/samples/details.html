@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% block title %}
-Customer details
+Sample details
 {% endblock title %}
 {% block body %}
 <div class="container bg-white border rounded py-3 my-1">
@@ -25,10 +25,6 @@ Customer details
           <label for="id_receipt_date" class="col-lg-2 col-form-label">{{ form.receipt_date.label }}</label>
           <div class="col-lg-auto">
             {{ form.receipt_date }}
-            <!--
-            <input class="form-control" type="datetime-local" name="receipt_date" id="id_receipt_date" value="{{ form.receipt_date.value|date:'c'}}" />
-            <span>{{ form.receipt_date.value|date:'Y-m-d' }} {{ form.receipt_date.value|date:'c' }}</span>
-            -->
             <small class="text-danger">{{ form.receipt_date.errors }}</small>
           </div>
         </div>
@@ -36,13 +32,6 @@ Customer details
           <label for="id_product" class="col-lg-2 col-form-label">{{ form.product.label }}</label>
           <div class="col-lg-auto">
             {{ form.product }}
-            <!--
-            <select name="product" class="form-control" id="id_product">
-              {% for id, name in form.product.field.choices %}
-              <option value="{{ id }}" {% if form.product.value == id %} selected{% endif %}>{{ name }}</option>
-              {% endfor %}
-            </select>
-            -->
             <small class="text-danger">{{ form.product.errors }}</small>
           </div>
         </div>
