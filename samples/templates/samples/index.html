@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+Samples
+{% endblock title %}
+{% block body %}
+<script src="{% static 'samples/js/samples.js' %}"></script>
+<div class="container bg-white border rounded py-3 my-1">
+  <h2 class="w3-text-theme">Samples</h2>
+  <p>Click on the sample to edit its details. Only laboratory managers can delete samples using the site administration page.</p>
+  <p>You can search by sample number, customer name or product name.</p>
+  <form id="search_form" class="form-inline" method="get">
+    <div class="form-group mx-sm-3 mb-2">
+      <label for="search" class="sr-only">Search</label>
+      <input type="text" class="form-control" id="search" name="q" placeholder="Sample" value="{{ query|default_if_none:'' }}" autofocus/>
+    </div>
+    <button form="search_form" type="submit" class="btn btn-primary mb-2">Search</button>
+  </form>
+  <div class="row">
+    <div class="col-auto">
+      <div class="mb-3">
+      {% if page_obj %}
+        {% if query %}
+        <span class="text-secondary small">
+          {{ page_obj.paginator.count }} records found for '{{ query }}'. <a href="{% url 'samples:index' %}">Clear search filter.</a>
+        </span>
+        {% else %}
+        <span class="text-secondary small">
+          {{ page_obj.paginator.count }} records found.
+        </span>
+        {% endif %}
+      {% else %}
+        <span class="text-secondary small">
+          No records found.
+          {% if query %}
+            <a href="{% url 'samples:index' %}">Clear search filter.</a>
+          {% endif %}
+        </span>
+      {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+              <th scope="col">#</th>
+              <th scope="col">Receipt date</th>
+              <th scope="col">Product</th>
+              <th scope="col">Customer</th>
+              <th scope="col">Sampling date</th>
+              <th scope="col">Sampling point</th>
+              <th scope="col">Report date</th>
+          </thead>
+          <tbody>
+            {% for item in page_obj %}
+            <tr class="clickable" data-sample_no="{{ item.id }}">
+              <td>{{ item.number }}</td>
+              <td>{{ item.receipt_date }}</td>
+              <td>{{ item.product }}</td>
+              <td>{{ item.customer }}</td>
+              <td>{{ item.sampling_date }}</td>
+              <td>{{ item.sampling_point }}</td>
+              <td>{{ item.report_date }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  {% if page_obj.has_other_pages %}
+  <div class="row justify-content-center">
+    <!-- Pagination for small screens -->
+    <div class="col-auto d-sm-none">
+      <ul class="pagination">
+        {% if page_obj.number != 1 %}
+          <li class="page-item"><a class="page-link" title="first" href="?page=1&q={{ query|default_if_none:'' }}">&laquo;</a></li>
+        {% else %}
+          <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+        {% endif %}
+        {% if page_obj.has_previous %}
+          <li class="page-item"><a class="page-link" title="previous" href="?page={{ page_obj.previous_page_number }}&q={{ query|default_if_none:'' }}">&lsaquo;</a></li>
+        {% else %}
+          <li class="page-item disabled"><span class="page-link">&lsaquo;</span></li>
+        {% endif %}
+        <li class="page-item disabled"><span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span></li>
+        {% if page_obj.has_next %}
+          <li class="page-item"><a class="page-link" title="next" href="?page={{ page_obj.next_page_number }}&q={{ query|default_if_none:'' }}">&rsaquo;</a></li>
+        {% else %}
+          <li class="page-item disabled"><span class="page-link">&rsaquo;</span></li>
+        {% endif %}
+        {% if page_obj.number != page_obj.paginator.num_pages %}
+          <li class="page-item"><a class="page-link" title="last" href="?page={{ page_obj.paginator.num_pages }}&q={{ query|default_if_none:'' }}">&raquo;</a></li>
+        {% else %}
+          <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+        {% endif %}
+      </ul>
+    </div>
+    <!-- Pagination for larger screens -->
+    <div class="col-auto d-none d-sm-block">
+      <ul class="pagination">
+        {% if page_obj.number != 1 %}
+          <li class="page-item"><a class="page-link" title="first" href="?page=1&q={{ query|default_if_none:'' }}">&laquo;</a></li>
+        {% else %}
+          <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+        {% endif %}
+        {% if page_obj.has_previous %}
+          <li class="page-item d-none d-sm-block"><a class="page-link" title="previous" href="?page={{ page_obj.previous_page_number }}&q={{ query|default_if_none:'' }}">&lsaquo;</a></li>
+        {% else %}
+          <li class="page-item d-none d-sm-block disabled"><span class="page-link">&lsaquo;</span></li>
+        {% endif %}
+        {% if page_obj.number|add:'-4' > 1 %}
+          <li class="page-item"><a class="page-link" href="?page={{ page_obj.number|add:'-5' }}">&hellip;</a></li>
+        {% endif %}
+        {% for i in page_obj.paginator.page_range %}
+          {% if page_obj.number == i %}
+            <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+          {% elif i > page_obj.number|add:'-5' and i < page_obj.number|add:'5' %}
+            <li class="page-item"><a class="page-link" href="?page={{ i }}&q={{ query|default_if_none:'' }}">{{ i }}</a></li>
+          {% endif %}
+        {% endfor %}
+        {% if page_obj.paginator.num_pages > page_obj.number|add:'4' %}
+          <li class="page-item"><a class="page-link" href="?page={{ page_obj.number|add:'5' }}">&hellip;</a></li>
+        {% endif %}
+        {% if page_obj.has_next %}
+          <li class="page-item d-none d-sm-block"><a class="page-link" title="next" href="?page={{ page_obj.next_page_number }}&q={{ query|default_if_none:'' }}">&rsaquo;</a></li>
+        {% else %}
+          <li class="page-item d-none d-sm-block disabled"><span class="page-link">&rsaquo;</span></li>
+        {% endif %}
+        {% if page_obj.number != page_obj.paginator.num_pages %}
+          <li class="page-item"><a class="page-link" title="last" href="?page={{ page_obj.paginator.num_pages }}&q={{ query|default_if_none:'' }}">&raquo;</a></li>
+        {% else %}
+          <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock body %}
