@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.admin.views.decorators import staff_member_required
 from django.core.paginator import Paginator
 from django.contrib import messages
@@ -30,7 +30,34 @@ def index(request):
 
 @staff_member_required(login_url="login")
 def add_sample(request):
-    pass
+    form = SampleForm(request.POST or None)
+    if form.is_valid():
+        number = form.cleaned_data['number']
+        receipt_date = form.cleaned_data['receipt_date']
+        customer = form.cleaned_data['customer']
+        product = form.cleaned_data['product']
+        sampling_date = form.cleaned_data['sampling_date']
+        sampling_point = form.cleaned_data['sampling_point']
+        last_sample = Sample.objects.last()
+        sample = Sample()
+        sample.number = last_sample.number + 1
+        sample.receipt_date = receipt_date
+        sample.customer = customer
+        sample.product = product
+        sample.sampling_date = sampling_date
+        sample.sampling_point = sampling_point
+        try:
+            sample.save()
+            msg = f"<b>{sample}</b> was added successfully."
+            messages.add_message(request, messages.SUCCESS, msg)
+            return redirect("samples:index")
+        except ValueError:
+            msg = f"Couldn't add <b>{sample}</b>. Please try again later."
+            messages.add_message(request, messages.ERROR, msg)
+    context = {
+        'form': form,
+    }
+    return render(request, "samples/add_sample.html", context)
 
 
 @staff_member_required(login_url="login")
