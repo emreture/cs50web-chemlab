@@ -6,7 +6,7 @@ Customers
 <div class="container bg-white border rounded py-3 my-1">
   <h2 class="w3-text-theme">Customers</h2>
   <p>Laboratory customers are legal entities. Only laboratory managers can associate users with customers using the site administration page.</p>
-  <p>Click on the customer name to update its details. Use the form under the list to add a new customer.</p>
+  <p>Click on the customer name to update its details. Use <a href="#new">the form</a> under the list to add a new customer.</p>
   <form id="search_form" class="form-inline" method="get">
     <div class="form-group mx-sm-3 mb-2">
       <label for="search" class="sr-only">Search</label>
@@ -48,7 +48,7 @@ Customers
   </div>
   {% include "pagination.html" %}
   <hr>
-  <h4 class="w3-text-theme">Add a new customer</h4>
+  <h4 class="w3-text-theme" id="new">Add a new customer</h4>
   <div class="row">
     <div class="col">
       <form class="" method="post">

@@ -38,7 +38,7 @@ def index(request):
         customers = Customer.objects.filter(name__icontains=query).order_by('id')
     else:
         customers = Customer.objects.all().order_by('id')
-    paginator = Paginator(customers, 5)
+    paginator = Paginator(customers, 10)
     if goto_last_page:
         page_number = paginator.num_pages
     page_obj = paginator.get_page(page_number)
