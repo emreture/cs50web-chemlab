@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+Add sample
+{% endblock title %}
+{% block body %}
+<div class="container bg-white border rounded py-3 my-1">
+  <div class="row">
+    <div class="col-auto">
+      <h2 class="w3-text-theme">Add sample</h2>
+      <p>For browsers that don't support date time picker (such as firefox), please enter the date fields in ISO 8601 format (YYYY-MM-DDTHH:MM).
+         For example, 2020-01-30T15:30. <span class="text-danger">Don't forget the capital letter 'T' between date and time.</span></p>
+      <p>If sampling time is unknown enter hour and minute as 00:00. For example, 2020-01-30T00:00</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <form class="" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="number" value="0">
+        <div class="form-group row">
+          <label for="id_receipt_date" class="col-lg-2 col-form-label">{{ form.receipt_date.label }}</label>
+          <div class="col-lg-auto">
+            {{ form.receipt_date }}
+            <small class="text-danger">{{ form.receipt_date.errors }}</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="id_product" class="col-lg-2 col-form-label">{{ form.product.label }}</label>
+          <div class="col-lg-auto">
+            {{ form.product }}
+            <small class="text-danger">{{ form.product.errors }}</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="id_customer" class="col-lg-2 col-form-label">{{ form.customer.label }}</label>
+          <div class="col-lg-auto">
+            {{ form.customer }}
+            <small class="text-danger">{{ form.customer.errors }}</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="id_sampling_date" class="col-lg-2 col-form-label">{{ form.sampling_date.label }}</label>
+          <div class="col-lg-auto">
+            {{ form.sampling_date }}
+            <small class="text-danger">{{ form.sampling_date.errors }}</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="id_sampling_point" class="col-lg-2 col-form-label">{{ form.sampling_point.label }}</label>
+          <div class="col-lg-auto">
+            {{ form.sampling_point }}
+            <small class="text-danger">{{ form.sampling_point.errors }}</small>
+          </div>
+        </div>
+        <div class="form-group">
+          <small class="text-danger">{{ form.non_field_errors }}</small>
+        </div>
+        <div class="form-group text-center">
+          <a class="btn btn-light border rounded mx-2" href="{% url 'samples:index' %}">Cancel</a>
+          <button class="btn btn-primary mx-2" type="submit">Add</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock body %}

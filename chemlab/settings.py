@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'customers',
+    "samples",
 ]
 
 MIDDLEWARE = [
@@ -130,10 +131,6 @@ LOGIN_REDIRECT_URL = '/'
 # Configure Django App for Heroku.
 import django_heroku
 django_heroku.settings(locals(), test_runner=False)
-# if DEBUG:
-#     django_heroku.settings(locals(), db_colors=False, databases=False, test_runner=False, staticfiles=True, allowed_hosts=False, logging=False, secret_key=False)
-# else:
-#     django_heroku.settings(locals())
 
 # Configure messages for bootstrap 4.
 from django.contrib.messages import constants as messages
