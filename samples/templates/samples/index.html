@@ -56,7 +56,7 @@ Samples
           <tbody>
             {% for item in page_obj %}
             <tr class="clickable" data-sample_no="{{ item.id }}">
-              <td>{{ item.number }}</td>
+              <td><a href="{% url 'samples:sample_details' item.id %}">{{ item.number }}</a></td>
               <td>{{ item.receipt_date }}</td>
               <td>{{ item.product }}</td>
               <td>{{ item.customer }}</td>

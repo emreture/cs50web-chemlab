@@ -7,11 +7,13 @@ class SampleForm(forms.ModelForm):
                                        widget=forms.DateTimeInput(format='%Y-%m-%dT%H:%M',
                                                                   attrs={'type': 'datetime-local',
                                                                          'class': 'form-control'}))
-    sampling_date = forms.DateTimeField(input_formats=['%Y-%m-%dT%H:%M', '%Y-%m-%d %H:%M'], required=False,
+    sampling_date = forms.DateTimeField(input_formats=['%Y-%m-%dT%H:%M', '%Y-%m-%d %H:%M', '%Y-%m-%dT%H:%MZ'],
+                                        required=False,
                                         widget=forms.DateTimeInput(format='%Y-%m-%dT%H:%M',
                                                                    attrs={'type': 'datetime-local',
                                                                           'class': 'form-control'}))
-    report_date = forms.DateTimeField(input_formats=['%Y-%m-%dT%H:%M', '%Y-%m-%d %H:%M'], required=False,
+    report_date = forms.DateTimeField(input_formats=['%Y-%m-%dT%H:%M', '%Y-%m-%d %H:%M', '%Y-%m-%dT%H:%MZ'],
+                                      required=False,
                                       widget=forms.DateTimeInput(format='%Y-%m-%dT%H:%M',
                                                                  attrs={'type': 'datetime-local',
                                                                         'class': 'form-control'}))
