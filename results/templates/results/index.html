@@ -1,8 +1,75 @@
 {% extends "base.html" %}
 {% load static %}
 {% block title %}
-Results
+Analysis results
 {% endblock title %}
 {% block body %}
-
+<script src="{% static 'results/js/results.js' %}"></script>
+<div class="container bg-white border rounded py-3 my-1">
+  <h2 class="w3-text-theme">Analysis results</h2>
+  <p>Click on the sample to see its analysis results.</p>
+  <p>You can search by sample number, customer name, product name or sampling point.</p>
+  <form id="search_form" class="form-inline" method="get">
+    <div class="form-group mx-sm-3 mb-2">
+      <label for="search" class="sr-only">Search</label>
+      <input type="text" class="form-control" id="search" name="q" placeholder="Sample" value="{{ query|default_if_none:'' }}" autofocus/>
+    </div>
+    <button form="search_form" type="submit" class="btn btn-primary mb-2">Search</button>
+  </form>
+  <div class="row">
+    <div class="col-auto">
+      <div class="mb-3">
+      {% if page_obj %}
+        {% if query %}
+        <span class="text-secondary small">
+          {{ page_obj.paginator.count }} records found for '{{ query }}'. <a href="{% url 'results:index' %}">Clear search filter.</a>
+        </span>
+        {% else %}
+        <span class="text-secondary small">
+          {{ page_obj.paginator.count }} records found.
+        </span>
+        {% endif %}
+      {% else %}
+        <span class="text-secondary small">
+          No records found.
+          {% if query %}
+            <a href="{% url 'results:index' %}">Clear search filter.</a>
+          {% endif %}
+        </span>
+      {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+              <th scope="col">#</th>
+              <th scope="col">Receipt date</th>
+              <th scope="col">Product</th>
+              <th scope="col">Customer</th>
+              <th scope="col">Sampling date</th>
+              <th scope="col">Sampling point</th>
+              <th scope="col">Report date</th>
+          </thead>
+          <tbody>
+            {% for item in page_obj %}
+            <tr class="clickable" data-sample_no="{{ item.id }}">
+              <td><a href="{% url 'results:results' item.id %}">{{ item.number }}</a></td>
+              <td>{{ item.receipt_date }}</td>
+              <td>{{ item.product }}</td>
+              <td>{{ item.customer }}</td>
+              <td>{{ item.sampling_date }}</td>
+              <td>{{ item.sampling_point }}</td>
+              <td>{{ item.report_date }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  {% include "pagination.html" %}
+</div>
 {% endblock body %}
