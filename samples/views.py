@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.admin.views.decorators import staff_member_required
 from django.core.paginator import Paginator
 from django.contrib import messages
@@ -72,7 +72,9 @@ def sample_details(request, sample_id):
         sampling_point = form.cleaned_data['sampling_point']
         report_date = form.cleaned_data['report_date']
         sample = Sample.objects.get(pk=sample_id)
-        sample.number = number
+        # Posted 'number' value will not be used!
+        # https://github.com/emreture/cs50web-chemlab/issues/3
+        # sample.number = number
         sample.receipt_date = receipt_date
         sample.customer = customer
         sample.product = product
@@ -88,7 +90,7 @@ def sample_details(request, sample_id):
             messages.add_message(request, messages.ERROR, msg)
     else:
         if request.method == "GET":
-            sample = Sample.objects.get(pk=sample_id)
+            sample = get_object_or_404(Sample, pk=sample_id)
             form = SampleForm(instance=sample)
     context = {
         'form': form,
