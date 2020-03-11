@@ -23,6 +23,13 @@ Results of {{ sample.number }}
       <b>Sampling date: </b>{{ sample.sampling_date }}
     </div>
   </div>
+  {% if request.user.is_staff %}
+  <div class="row small mt-1">
+    <div class="col-lg-auto">
+      <a href="{% url 'samples:sample_details' sample.id %}">Click here</a> to edit sample details.
+    </div>
+  </div>
+  {% endif %}
   <hr>
   <form class="" method="post">
     {% if request.user.is_staff %}

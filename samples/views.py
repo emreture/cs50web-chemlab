@@ -94,5 +94,6 @@ def sample_details(request, sample_id):
             form = SampleForm(instance=sample)
     context = {
         'form': form,
+        'sample_id': sample_id
     }
     return render(request, "samples/details.html", context)

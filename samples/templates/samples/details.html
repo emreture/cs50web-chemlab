@@ -5,11 +5,10 @@ Sample details
 {% endblock title %}
 {% block body %}
 <div class="container bg-white border rounded py-3 my-1">
-  <div class="row">
-    <div class="col-auto">
-      <h2 class="w3-text-theme">Edit sample details</h2>
-    </div>
-  </div>
+  <h2 class="w3-text-theme">Edit sample details</h2>
+  <p>
+    Update the sample details using the form below. <a href="{% url 'results:results' sample_id %}">Click here</a> to enter analysis results for this sample.
+  </p>
   <div class="row">
     <div class="col">
       <form class="" method="post">
@@ -71,6 +70,7 @@ Sample details
           <button class="btn btn-primary mx-2" type="submit">Update</button>
         </div>
       </form>
+      <a class="small" href="{% url 'samples:index' %}">&lsaquo; Back to list</a>
     </div>
   </div>
 </div>
