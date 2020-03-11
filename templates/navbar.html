@@ -19,7 +19,7 @@
       {% endif %}
       {% if request.user.is_authenticated %}
       <li class="nav-item">
-        <a class="nav-link" href="#">Analysis results</a>
+        <a class="nav-link" href="{% url 'results:index' %}">Analysis results</a>
       </li>
       {% endif %}
       {% if request.user.is_staff %}

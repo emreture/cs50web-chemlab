@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+Results of {{ sample.number }}
+{% endblock title %}
+{% block body %}
+<div class="container bg-white border rounded py-3 my-1">
+  <h2 class="w3-text-theme">Sample {{ sample.number }}</h2>
+  <div class="row small">
+    <div class="col-lg-auto">
+      <b>Customer: </b>{{ sample.customer }}
+    </div>
+    <div class="col-lg-auto">
+      <b>Product: </b>{{ sample.product }}
+    </div>
+    <div class="col-lg-auto">
+      <b>Receipt date: </b>{{ sample.receipt_date }}
+    </div>
+    <div class="col-lg-auto">
+      <b>Sampling point: </b>{{ sample.sampling_point }}
+    </div>
+    <div class="col-lg-auto">
+      <b>Sampling date: </b>{{ sample.sampling_date }}
+    </div>
+  </div>
+  <hr>
+  <form class="" method="post">
+    {% if request.user.is_staff %}
+      {% csrf_token %}
+    {% endif %}
+    {% for item in results %}
+    <div class="form-group row">
+      <label class="col-lg-3 col-form-label">{{ item.name }} ({{ item.number }})</label>
+      <div class="col-lg-2">
+        <input class="form-control" type="text" name="test_{{ item.id }}" value="{{ item.result }}" {{ readonly }}/>
+      </div>
+      <label class="col-lg-2 col-form-label">{{ item.unit }}</label>
+    </div>
+    {% empty %}
+    <p>No results found for this sample.</p>
+    {% endfor %}
+    {% if request.user.is_staff %}
+    <div class="form-group text-center">
+      <a class="btn btn-light border rounded mx-2" href="{% url 'results:index' %}">Cancel</a>
+      <button class="btn btn-primary mx-2" type="submit">Update</button>
+    </div>
+    {% endif %}
+  </form>
+  <a class="small" href="{% url 'results:index' %}">&lsaquo; Back to list</a>
+</div>
+{% endblock body %}

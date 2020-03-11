@@ -23,4 +23,5 @@ urlpatterns = [
     path("", TemplateView.as_view(template_name='index.html'), name="index"),
     path("customers/", include("customers.urls")),
     path("samples/", include("samples.urls")),
+    path("results/", include("results.urls"))
 ]
