@@ -39,6 +39,15 @@ Results of {{ sample.number }}
     {% empty %}
     <p>No results found for this sample.</p>
     {% endfor %}
+    {% if results %}
+    <div class="form-group row">
+      <label class="col-lg-3 col-form-label">Report date</label>
+      <div class="col-lg-auto">
+        <input class="form-control" type="datetime-local" name="report_date" value="{{ report_date }}" {{ readonly }}/>
+        <small class="text-danger">{{ report_date_error|safe }}</small>
+      </div>
+    </div>
+    {% endif %}
     {% if request.user.is_staff %}
     <div class="form-group text-center">
       <a class="btn btn-light border rounded mx-2" href="{% url 'results:index' %}">Cancel</a>

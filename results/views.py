@@ -3,7 +3,9 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.contrib import messages
 from django.http import Http404
+from django.utils.dateparse import parse_datetime
 from samples.models import Sample, Result, TestMethod
+from datetime import datetime
 
 # Create your views here.
 
@@ -51,30 +53,47 @@ def index(request):
 @login_required(login_url="login")
 def results(request, sample_id):
     sample = get_object_or_404(Sample, pk=sample_id)
+    report_date = sample.report_date
+    report_date_error = ""
     user = request.user
     if not user.is_staff:
         organization = user.organization.all()
         if sample.customer not in list(organization):
             raise Http404(f"User not allowed to access analysis reports of {sample.customer}.")
     if request.method == "POST":
-        sample.results.all().delete()
-        error = False
-        for key, item in request.POST.items():
-            if key.startswith("test_") and item != "":
-                test_id = key.split("test_")[-1]
-                test_result = item
-                try:
-                    test_method = TestMethod.objects.get(pk=test_id)
-                    r = Result.objects.create(sample=sample, test_method=test_method, result=test_result)
-                    sample.results.add(r)
-                except TestMethod.DoesNotExist:
-                    error = True
-        if error:
-            msg = "Some results were not updated."
-            messages.add_message(request, messages.ERROR, msg)
+        form_is_valid = True
+        report_date = request.POST.get('report_date')
+        cleaned_report_date = None
+        if report_date:
+            try:
+                cleaned_report_date = parse_datetime(report_date)
+            except ValueError:
+                form_is_valid = False
+            if cleaned_report_date is None:
+                form_is_valid = False
+        if form_is_valid:
+            sample.report_date = cleaned_report_date
+            sample.save()
+            sample.results.all().delete()
+            error = False
+            for key, item in request.POST.items():
+                if key.startswith("test_") and item != "":
+                    test_id = key.split("test_")[-1]
+                    test_result = item
+                    try:
+                        test_method = TestMethod.objects.get(pk=test_id)
+                        r = Result.objects.create(sample=sample, test_method=test_method, result=test_result)
+                        sample.results.add(r)
+                    except TestMethod.DoesNotExist:
+                        error = True
+            if error:
+                msg = "Some results were not updated."
+                messages.add_message(request, messages.ERROR, msg)
+            else:
+                msg = f"<b>{sample}</b> results were updated successfully."
+                messages.add_message(request, messages.SUCCESS, msg)
         else:
-            msg = f"<b>{sample}</b> results were updated successfully."
-            messages.add_message(request, messages.SUCCESS, msg)
+            report_date_error = "<ul><li>Enter a valid date/time</li></ul>"
     result_list = list()
     for i in sample.product.tests.all():
         result_dict = dict()
@@ -95,9 +114,13 @@ def results(request, sample_id):
         readonly = ""
     else:
         readonly = "readonly"
+    if isinstance(report_date, datetime):
+        report_date = report_date.strftime("%Y-%m-%dT%H:%M")
     context = {
         'results': result_list,
         'sample': sample,
-        'readonly': readonly
+        'readonly': readonly,
+        'report_date': report_date,
+        'report_date_error': report_date_error,
     }
     return render(request, "results/details.html", context)
