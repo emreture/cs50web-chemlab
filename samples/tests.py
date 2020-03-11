@@ -38,6 +38,11 @@ class ModelsTestCase(TestCase):
                                         report_date=datetime(2020, 1, 15, tzinfo=timezone.utc))
 
         result1 = Result.objects.create(sample=sample1, test_method=flash_point, result="60.0")
+        result2 = Result.objects.create(sample=sample1, test_method=density, result="0.8254")
+        result3 = Result.objects.create(sample=sample1, test_method=viscosity, result="2.976")
+        result4 = Result.objects.create(sample=sample1, test_method=sulfur_content, result="< 2.0")
+        result5 = Result.objects.create(sample=sample2, test_method=mon, result="90.4")
+        result6 = Result.objects.create(sample=sample2, test_method=density, result="0.7581")
 
     def test_object_names(self):
         gasoil = Product.objects.get(name="Gasoil")
@@ -69,3 +74,41 @@ class ModelsTestCase(TestCase):
         emek_samples = Customer.objects.get(name="Emek A.Ş.").samples
         self.assertEqual(emek_samples.count(), 0)
 
+    def test_results(self):
+        sample1 = Sample.objects.get(pk=1)
+        self.assertEqual(sample1.results.count(), 4)
+        self.assertEqual(sample1.product.tests.count(), 4)
+        sample2 = Sample.objects.get(pk=2)
+        self.assertEqual(sample2.results.count(), 2)
+        self.assertEqual(sample2.product.tests.count(), 3)
+
+    def test_object_deletion(self):
+        # Objects to be deleted are created here. Because order of test execution is unknown.
+        test_method1 = TestMethod.objects.create(number="TM01", name="test_method1", unit="-")
+        test_method2 = TestMethod.objects.create(number="TM02", name="test_method2", unit="-")
+        test_method3 = TestMethod.objects.create(number="TM03", name="test_method3", unit="-")
+        test_method4 = TestMethod.objects.create(number="TM04", name="test_method4", unit="-")
+        product1 = Product.objects.create(name="product1")
+        product2 = Product.objects.create(name="product2")
+        product1.tests.add(test_method1)
+        product1.tests.add(test_method2)
+        product1.tests.add(test_method3)
+        product2.tests.add(test_method2)
+        product2.tests.add(test_method4)
+        customer1 = Customer.objects.create(name="customer1", address="Universe")
+        sample1 = Sample.objects.create(number=999999, receipt_date=datetime(2020, 1, 10, 9, 30, tzinfo=timezone.utc),
+                                        product=product1, customer=customer1,
+                                        sampling_date=datetime(2020, 1, 5, tzinfo=timezone.utc),
+                                        sampling_point="sampling_point1",
+                                        report_date=datetime(2020, 1, 15, tzinfo=timezone.utc))
+        result1 = Result.objects.create(sample=sample1, test_method=test_method1, result="1")
+        result2 = Result.objects.create(sample=sample1, test_method=test_method2, result="2")
+        result3 = Result.objects.create(sample=sample1, test_method=test_method3, result="3")
+        sample = Sample.objects.get(number=999999)
+        self.assertEqual(sample.results.count(), 3)
+        sample.results.all().delete()
+        self.assertEqual(sample.results.count(), 0)
+        product = sample.product
+        self.assertEqual(product.tests.count(), 3)
+        product.tests.all().delete()
+        self.assertEqual(product.tests.count(), 0)
