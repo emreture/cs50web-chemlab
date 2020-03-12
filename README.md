@@ -27,7 +27,7 @@ Sample details are modelled in ```Sample``` class. Its fields are number, receip
 
 First of all, users should be created by laboratory managers using Django's built in admin app. Superuser status should be active for laboratory managers and staff status should be active for laboratory staff. Customer users are associated with customers when customers are created. Only laboratory managers can create users.
 
-Customers are created in the admin app. When adding/editing a customer object, users of that customer can be selected. Laboratory staff can add and edit customers using website's customers page. Only laboratory managers can delete customers and associate users with customers using the admin app. Customers also can be added and edited by laboratory staff using customers app. Link to customers app is located on the navbar. But laboratory staff can not associate users with customers.
+Customers are created in the admin app. When adding/editing a customer object, users of that customer can be selected. Laboratory staff can add and edit customers using website's customers page. Only laboratory managers can delete customers and associate users with customers using the admin app.
 
 After creating users and customers, test methods that will be performed in the laboratory should be defined. Then products and test methods to be applied to these products should be determined. Both test methods and products are added, edited and deleted using the admin app by laboratory managers.
 
@@ -39,7 +39,7 @@ Analysis results of samples can be entered using the results app by laboratory s
 
 ## Web pages
 ### Navigation bar
-Customers can only see 'Home' and 'Analysis results' links on the navbar. In addition to these links laboratory staff can see 'Samples' (list samples and add sample) and 'Customers' link. Laboratory manager can see all of the links including the 'Site administration' link on the navbar.
+Customers can only see 'Home' and 'Analysis results' links on the navbar. In addition to these links laboratory staff can see 'Samples' (list samples and add sample) and 'Customers' links. Laboratory manager can see all of the links including the 'Site administration' link on the navbar.
 
 ### Homepage (/)
 This is the landing page of the website. A brief introduction about this website is presented on this page.
@@ -70,3 +70,5 @@ When a customer is clicked, user is directed to a page where he/she can edit its
 
 ## Finally
 I'd like to thank all the people who made this great [CS50's Web Programming with Python and JavaScript course](https://www.edx.org/course/cs50s-web-programming-with-python-and-javascript) possible and also thank you to [Brian Yu](https://www.edx.org/bio/brian-yu) for his fluency and easy-to-understand lectures.
+
+March 2020 - M. Emre TÜRE
