@@ -50,7 +50,7 @@ Results of {{ sample.number }}
     <div class="form-group row">
       <label class="col-lg-3 col-form-label">Report date</label>
       <div class="col-lg-auto">
-        <input class="form-control" type="datetime-local" name="report_date" value="{{ report_date }}" {{ readonly }}/>
+        <input class="form-control" type="datetime-local" name="report_date" value="{{ report_date|default_if_none:'' }}" {{ readonly }}/>
         <small class="text-danger">{{ report_date_error|safe }}</small>
       </div>
     </div>
