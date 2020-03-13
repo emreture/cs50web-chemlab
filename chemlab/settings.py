@@ -142,7 +142,3 @@ MESSAGE_TAGS = {
     messages.WARNING: 'alert-warning',
     messages.ERROR: 'alert-danger',
 }
-
-print('DEBUG:', DEBUG)
-print('DATABASES:', DATABASES)
-print('ALLOWED_HOSTS:', ALLOWED_HOSTS)
